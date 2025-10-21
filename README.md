@@ -1,117 +1,144 @@
-Consumer ESU Enrollment
-=======================
+# Windows 10 消费者版扩展安全更新 (Consumer ESU) 注册脚本  
+===============================
+作者原版：https://github.com/abbodi1406/ConsumerESU
+我们只是做了下汉化改进，最终解释权归作者所有!
+此 PowerShell 脚本用于通过 **免费备份选项** 并使用 **Microsoft 帐户** 注册加入 Windows 10 消费者扩展安全更新（Consumer Extended Security Updates，简称 ESU）计划。  
 
-Windows Powershell script to enroll in Windows 10 Consumer Extended Security Updates (ESU) program via the free Backup option, **with** Microsoft Account.
+---
 
-***UPDATE 2025-10-12:***  
-------------------------
+📘 消费者设备与非消费者设备分类说明
+============================
 
-- Enrollment without Microsoft account is not possible anymore as of 2025-10-08
-- Acquire license without enrollment no longer works as well
-- Already enrolled devices with Local account or License should not be affected by this change
+✅ 消费者设备（支持 Consumer ESU）包括：
+  - Windows 10 Home（家庭版）
+  - Windows 10 Home Single Language（单语言家庭版）
+  - Windows 10 Pro（专业版）
+  - Windows 10 Pro for Workstations（工作站专业版）
 
-Requirements
-------------
+🚫 非消费者设备（不支持 Consumer ESU）包括：
+  - Windows 10 Enterprise（企业版）
+  - Windows 10 Education（教育版）
+  - Windows 10 Enterprise LTSC / LTSC IoT（长期服务版）
+  - Windows 10 Pro Education / Pro for Education（教育专业版）
+### **更新日志 2025-10-12**
+---------------------------------
 
-- [Consumer ESU Prerequisites](https://www.microsoft.com/windows/extended-security-updates) ([Old page](https://web.archive.org/web/20250727070928/https://support.microsoft.com/en-us/windows/windows-10-consumer-extended-security-updates-esu-program-33e17de9-36b3-43bb-874d-6c53d2e4bf42)).
-- Cumulative Update 2025-06 KB5061087 (19045.6036) or later.
-- Enabled Consumer ESU feature (see below).
-- Administrative account.
-- Internet connectivity.
-- User Region is not geo-blocked (Russia, Belarus, Iran, Cuba, North Korea, Syria, Sudan, Lebanon, Venezuela).
+- 从 **2025-10-08** 起，不再支持在未登录 Microsoft 帐户的情况下注册。  
+- 不登录注册账号直接获取许可证的方式也已失效。  
+- 已经注册成功的设备（使用本地账户或已获取许可证）不受影响。 
+### 你的系统版本，非家庭版，单语言家庭版，专业版，工作站专业版，是不能注册的，需要转换成消费者版才可以注册ESU ###
+K949M-8N2TP-2H9VY-BVQJR-FC2KM（专业版，只能转成专业版，不能激活，激活可自行网上查找资料！）
 
-______________________________
+---
 
-Design
-------
+## 系统要求
 
-By default, the script will run in the following order, if a step failed, the next is executed:
+- [Consumer ESU 前提条件](https://www.microsoft.com/windows/extended-security-updates) （[旧页面](https://web.archive.org/web/20250727070928/https://support.microsoft.com/en-us/windows/windows-10-consumer-extended-security-updates-esu-program-33e17de9-36b3-43bb-874d-6c53d2e4bf42)）  
+- 已安装 2025 年 6 月累积更新 KB5061087（版本 19045.6036）或更新版本  
+- Consumer ESU 功能已启用（见下方说明）  
+- 管理员权限账户  
+- 网络连接正常  
+- 用户地区未被地理封锁（下列地区被封锁：俄罗斯、白俄罗斯、伊朗、古巴、朝鲜、叙利亚、苏丹、黎巴嫩、委内瑞拉）  
 
-- Enroll using Microsoft account currently logged-in as Windows user.
-- Enroll using Microsoft account currently logged-in with Microsoft Store.
+---
 
-______________________________
+## 工作原理（设计逻辑）
 
-Usage
------
+脚本默认按以下顺序执行操作（如果前一步失败，将自动尝试下一步）：
 
-- Click on Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip) button at the top to download.
-- Extract all files from the ZIP file.
-- Run `Consumer_ESU_Enrollment_run.cmd` as administrator.
+1. 使用当前登录的 **Microsoft 帐户（Windows 用户）** 注册  
+2. 使用当前登录的 **Microsoft 商店账户** 注册  
 
-Advanced Usage
---------------
+---
 
-***Command Prompt:***  
-- Click on Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip) button at the top to download.
-- Extract all files from the ZIP file.
-- Run *`Command Prompt`* as administrator in the same folder where you located the extracted files, or change location to it using `cd /d` command.
-- Execute `Consumer_ESU_Enrollment_run.cmd` with the wanted optional parameters
-- Examples:  
-`Consumer_ESU_Enrollment_run.cmd -Store -Proceed`  
-`Consumer_ESU_Enrollment_run.cmd -Remove`  
-`Consumer_ESU_Enrollment_run.cmd -Reset`
+## 使用方法
 
-***Windows Powershell:***  
-- Click on Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip) button at the top to download.
-- Extract all files from the ZIP file.
-- Run *`Windows Powershell`* as administrator in the same folder where you located the extracted files, or change location to it using `cd` command.
-- Temporary allow running unsigned scripts:  
-`Set-ExecutionPolicy Bypass -Scope Process -Force`
-- Execute `Consumer_ESU_Enrollment.ps1` (with optional parameters if wanted)
-- Examples:  
-`.\Consumer_ESU_Enrollment.ps1`  
-`.\Consumer_ESU_Enrollment.ps1 -Store -Proceed`  
-`.\Consumer_ESU_Enrollment.ps1 -Remove`  
-`.\Consumer_ESU_Enrollment.ps1 -Reset`
+1. 点击页面顶部的 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 按钮下载脚本  
+2. 解压 ZIP 文件中的所有内容  
+3. 右键以管理员身份运行 `Consumer_ESU_Enrollment_run.cmd`  
 
-Optional Parameters
--------------------
+---
 
-|Switch    |Effect|
-|----------|------|
-| -Online  | Only enroll using Microsoft user account token, exit if failed |
-| -Store   | Only enroll using Microsoft store account token, exit if failed |
-| -Remove  | Remove Consumer ESU License if exists |
-| -Reset   | Reset Consumer ESU features to the default state (if changed by the script) |
-| =        | =
-| -Proceed | Force running enrollment, even if Eligibility status is already enrolled |
+## 高级用法
 
-- You must only specify **one** switch of the first two switches.
-- Only `-Proceed` switch can be combined with the two enroll switches to re-enroll with a different token.
+### **命令提示符方式：**
 
-______________________________
+1. 点击 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 下载  
+2. 解压所有文件  
+3. 在解压后的文件夹内以管理员身份打开命令提示符（或用 `cd /d` 命令进入该目录）  
+4. 执行以下命令运行脚本（可带可选参数）  
 
-Important Note
---------------
+示例：
+```
+Consumer_ESU_Enrollment_run.cmd -Store -Proceed
+Consumer_ESU_Enrollment_run.cmd -Remove
+Consumer_ESU_Enrollment_run.cmd -Reset
+```
 
-- If you only have one user account, once you successfully got `DeviceEnrolled` status,  
-and to avoid changing or reverting the state, specially for EEA or geo-blocked regions,  
-it is recommended to disable all related Consumer ESU scheduled tasks.
-- To do so, run *`Consumer_ESU_ScheduledTasks.cmd`* as administrator, and press 1 to disable them.
-- You can reenable them anytime using 2nd option of the same script.
+---
 
-______________________________
+### **Windows PowerShell 方式：**
 
-Consumer ESU Feature
---------------------
+1. 点击 **Code > [Download ZIP](https://github.com/abbodi1406/ConsumerESU/archive/refs/heads/master.zip)** 下载  
+2. 解压所有文件  
+3. 在解压目录中以管理员身份打开 **PowerShell**  
+4. 临时允许执行未签名脚本：
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force
+```
+5. 执行 PowerShell 脚本（可带可选参数）  
 
-- If the feature is not broadly enabled yet, the script will try to enable it.
+示例：
+```
+.\Consumer_ESU_Enrollment.ps1
+.\Consumer_ESU_Enrollment.ps1 -Store -Proceed
+.\Consumer_ESU_Enrollment.ps1 -Remove
+.\Consumer_ESU_Enrollment.ps1 -Reset
+```
 
-- If the script asked to close the session, then close the whole console window, and run the script again (with same parameters if any).
+---
 
-<details><summary>Manual Reference</summary>
+## 可选参数说明
 
+| 参数开关 | 功能说明 |
+|-----------|-----------|
+| `-Online` | 仅使用 Microsoft 用户帐户令牌进行注册，失败则退出 |
+| `-Store` | 仅使用 Microsoft 商店帐户令牌进行注册，失败则退出 |
+| `-Remove` | 删除现有 Consumer ESU 许可证 |
+| `-Reset` | 重置 Consumer ESU 功能为默认状态（若被脚本修改过） |
+| `-Proceed` | 即使已注册仍强制重新注册 |
 
-How to enable it manually yourself, this require a reboot to take effect:
+**注意：**
+- 前两个参数（`-Online` 与 `-Store`）只能同时指定其中一个。  
+- 仅 `-Proceed` 参数可与注册参数一起使用，以便使用不同令牌重新注册。  
 
-- Run *`Command Prompt`* as administrator.
-- Execute the following command:  
+---
+
+## 重要说明
+
+- 如果系统中只有一个用户账号，在成功获得 `DeviceEnrolled` 状态后，  
+  为避免状态被更改或回滚（尤其在 EEA 或地理封锁地区），  
+  建议禁用所有与 Consumer ESU 相关的计划任务。  
+- 执行方法：以管理员身份运行 `Consumer_ESU_ScheduledTasks.cmd`，按 **1** 禁用相关任务。  
+- 需要重新启用时，运行同一脚本并按 **2** 即可恢复。  
+
+---
+
+## Consumer ESU 功能启用
+
+- 如果此功能尚未全面开放，脚本将自动尝试启用。  
+- 如果脚本提示关闭会话，请直接关闭整个控制台窗口，然后重新运行脚本（参数保持一致）。  
+
+<details><summary>手动启用参考方法</summary>
+
+手动启用此功能（需重启系统生效）：
+
+1. 以管理员身份运行命令提示符。  
+2. 输入以下命令：
 ```
 reg.exe add "HKLM\SYSTEM\CurrentControlSet\Policies\Microsoft\FeatureManagement\Overrides" /v 4011992206 /t REG_DWORD /d 2 /f
 ```
-- Run *`Windows Powershell`* as administrator.
-- Copy and paste the following commands together as-is, wait for "Task Completed" message:  
+3. 以管理员身份运行 PowerShell，并依次执行以下命令（等待 “Task Completed” 提示）：  
 ```
 $TN = "ReconcileFeatures"; $TP = "\Microsoft\Windows\Flighting\FeatureConfig\"; $null = Enable-ScheduledTask $TN $TP
 Start-ScheduledTask $TN $TP; while ((Get-ScheduledTask $TN $TP).State.value__ -eq 4) {start-sleep -sec 1}; "Task Completed"
@@ -120,45 +147,42 @@ $TN = "UsageDataFlushing"; $TP = "\Microsoft\Windows\Flighting\FeatureConfig\"; 
 Start-ScheduledTask $TN $TP; while ((Get-ScheduledTask $TN $TP).State.value__ -eq 4) {start-sleep -sec 1}; "Task Completed"
 #
 ```
-- **Restart the system**.
-- .
-- Run *`Command Prompt`* as administrator.
-- Execute the following commands:  
+4. **重启系统。**  
+5. 再次以管理员身份打开命令提示符，执行以下命令：
 ```
 cmd /c ClipESUConsumer.exe -evaluateEligibility
 reg.exe query "HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\ConsumerESU"
 ```
-- Verify that the last command shows **ESUEligibility** value as non-zero.  
-if so, proceed to run the powershell script as explained above.
-- If the value is zero `0x0` or does not exist, then the operation is failed, and you have to wait for official broad availability.
+6. 检查最后一条命令的输出是否包含 **ESUEligibility** 且值不为零。  
+   若不为零，说明功能已启用，可继续执行主脚本。  
+   若值为 `0x0` 或不存在，说明尚未开放，需要等待微软正式推送。  
 </details>
 
-______________________________
+---
 
-Bypass Region Block
--------------------
+## 绕过地区封锁（Region Block）
 
-<details><summary>Click to expand</summary>
+<details><summary>点击展开查看</summary>
 
+临时切换地区到未被封锁的国家/地区：
 
-- Temporary change your region to non-blocked country:
+微软地区代码表参考：  
+[Table of Geographical Locations](https://learn.microsoft.com/en-us/windows/win32/intl/table-of-geographical-locations)
 
-Table of Geographical Locations:  
-https://learn.microsoft.com/en-us/windows/win32/intl/table-of-geographical-locations
+手动更改路径：  
+`设置 > 时间和语言 > 区域 > 国家或地区`
 
-manually:  
-`Settings > Time & Language > Region > Country or region`
+或在 PowerShell 中执行命令：  
+```
+Set-WinHomeLocation -GeoId 244
+```
 
-or run *`Windows Powershell`* and execute:  
-`Set-WinHomeLocation -GeoId 244`
+然后按照上方说明运行注册脚本。  
 
-- Run the script to enroll as explained above.
+注册成功（显示 `DeviceEnrolled / SUCCESS`）后：  
+以管理员身份运行 `Consumer_ESU_ScheduledTasks.cmd` 并选择：  
 
-- Verify that "ESU Eligibility state" is `DeviceEnrolled / SUCCESS`.
+`[1] 禁用 Consumer ESU 计划任务`
 
-- Run *`Consumer_ESU_ScheduledTasks.cmd`* as administrator, and press 1 to execute this option:
-
-`[1] Disable Consumer ESU scheduled tasks`
-
-- Restore your original region location, manually or using powershell as before.
+最后可将地区恢复为原始设置（手动或 PowerShell 命令恢复）。  
 </details>
